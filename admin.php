@@ -39,8 +39,7 @@ if(isset($_POST['add-product-btn'])){
     <?php 
     if(isset($message)){
 foreach($message as $message){
-    echo '<div class="message"><span>'.$message.
-    '</span> <i class="fas fa-times" onclick="this.parentElement.style.display = none;"></i> </div>';
+    echo '<div class="message"><span>'.$message.'</span> <i class="fas fa-times" onclick="this.parentElement.style.display = `none`;"></i> </div>';
 }
     };
     ?>
@@ -57,14 +56,53 @@ foreach($message as $message){
 
 
             </form>
+        </section>
+        <!-- displaying products table -->
+        <section class="display-product-table">
+            <table>
+                <thead>
+                    <th>Product Name</th>
+                    <th>Product Price</th>
+                    <th>Product Date</th>
+                    <th>Product Image</th>
+                    <th>Action</th>
+                </thead>
+                <tbody>
+                    <?php 
+                    $selectQuery = "SELECT * FROM products ORDER BY productDate DESC";
+                    $selectProducts = mysqli_query($db_connection, $selectQuery);
+                    if(mysqli_num_rows($selectProducts) > 0){
+                        while($row = mysqli_fetch_assoc($selectProducts)){
+                     ?>
+                    <tr>
+                        <td><?php echo $row['name']; ?></td>
+                        <td><?php echo $row['price']; ?>$</td>
+                        <td><?php echo $row['productDate']; ?></td>
+                        <td><img src="uploaded_img/<?php echo $row['image']; ?>" height="100" alt=""></td>
+                        <td><a href="admin.php?delete=<?php echo $row['id']; ?>" class="delete-btn"
+                                onclick="return confirm('are you sure you want to delete this product?');">
+                                <i class="fas fa-trash"></i>Delete</a>
+                            <a href="admin.php?edit=<?php echo $row['id']; ?>" class="option-btn"
+                                onclick="return confirm('are you sure you want to delete this product?');">
+                                <i class="fas fa-edit"></i>Update</a>
+                        </td>
+                    </tr>
+
+
+                    <?php
+                      };
+                    }else{
+                        echo "<sapn>No Products Added Yet</span>";
+                    }
+                    ?>
+
+                </tbody>
+            </table>
 
 
         </section>
 
     </div>
-
-
-
 
     <!-- js file link -->
     <script src="js/script.js"></script>
