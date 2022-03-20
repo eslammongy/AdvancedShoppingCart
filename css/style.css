@@ -229,8 +229,9 @@ section {
     margin-bottom: 2rem;
     text-align: center;
     background-color: var(--bg-color);
-    color: var(--black);
+    color: var(--red);
     font-size: 2rem;
+    font-weight: 700;
     padding: 1.5rem;
 }
 
