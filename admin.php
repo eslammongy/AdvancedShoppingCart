@@ -1,3 +1,28 @@
+<?php 
+error_reporting(E_ERROR | E_PARSE);
+include('config.php');
+
+if(isset($_POST['add-product-btn'])){
+    $proName = $_POST['pro_name'];
+    $proPrice = $_POST['pro_price'];
+    $proImage = $_FILES['pro_image']['name'];
+    $proImageTempName = $_FILES['pro_image']['tmp_name'];
+    $proImageFolder = 'uploaded_img/'.$proImage;
+
+     $query = "INSERT INTO products(name,price,image)
+        VALUES('$proName','$proPrice','$proImage')";
+    $addingNewProduct = mysqli_query($db_connection, $query) or die('error occured when adding new product');
+
+    if($addingNewProduct){
+        move_uploaded_file($proImageTempName, $proImageFolder);
+        $message[] = 'adding new product successfully';
+    }else{
+        $message[] = "could not add new product";
+    }
+
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,6 +36,15 @@
 </head>
 
 <body>
+    <?php 
+    if(isset($message)){
+foreach($message as $message){
+    echo '<div class="message"><span>'.$message.
+    '</span> <i class="fas fa-times" onclick="this.parentElement.style.display = none;"></i> </div>';
+}
+    };
+    ?>
+
     <?php include('header.php'); ?>
     <div class="container">
         <section>
