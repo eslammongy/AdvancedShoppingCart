@@ -19,8 +19,20 @@ if(isset($_POST['add-product-btn'])){
     }else{
         $message[] = "could not add new product";
     }
-
+};
+if(isset($_GET['delete'])){
+    $deleteID = $_GET['delete'];
+    $deleteQuery = "DELETE FROM products WHERE id = $deleteID";
+    $deleteProduct = mysqli_query($db_connection, $deleteQuery);
+    if($deleteProduct){
+        // header('location:admin.php');
+        $message[] = "product deleted successfully";
+    }else{
+        //   header('location:admin.php');
+        $message[] = "product deleted successfully";
+    }
 }
+
 ?>
 
 <!DOCTYPE html>
