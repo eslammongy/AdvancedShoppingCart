@@ -33,6 +33,25 @@ if (isset($_GET['delete'])) {
         $message[] = "product deleted successfully";
     }
 };
+/* updating selected product */
+if(isset($_POST['update_product'])){
+    $updateID = $_POST['update_p_id'];
+    $proNameUp = $_POST['update_p_name'];
+    $proPriceUp = $_POST['update_p_price'];
+    $proImageUp = $_FILES['update_p_image']['name'];
+    $proImgTmpNameUp = $_FILES['update_p_image']['tmp_name'];
+    $proImageFolderUp = 'uploaded_img/' . $proImageUp;
+    $updateQuery = mysqli_query($db_connection, "UPDATE products SET name = '$proNameUp', price = '$proPriceUp', image = '$proImageUp' WHERE id = '$updateID'");
+    if($updateQuery){
+        move_uploaded_file($proImgTmpNameUp, $proImageFolderUp);
+        $message[] = "product updated successfully";
+        header('location:admin.php');
+    }else{
+        $message[] = "error when updating this product";
+        header('location:admin.php');
+    }
+
+};
 
 ?>
 
