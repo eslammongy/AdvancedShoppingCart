@@ -291,6 +291,7 @@ section {
 .products .box-container .box img {
     height: 25rem;
     width: 25rem;
+    border-radius: 5px;
 }
 
 .products .box-container .box h3 {
