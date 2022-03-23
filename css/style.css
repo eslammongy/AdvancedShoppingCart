@@ -2,7 +2,7 @@
 :root {
     --blue: #2980b9;
     --red: rgb(252, 82, 53);
-    --orange: rgba(255, 136, 0, 0.719);
+    --orange: rgb(255, 136, 0);
     --black: #333;
     --white: #fff;
     --bg-color: #eee;
@@ -290,6 +290,7 @@ section {
 
 .products .box-container .box img {
     height: 25rem;
+    width: 25rem;
 }
 
 .products .box-container .box h3 {
