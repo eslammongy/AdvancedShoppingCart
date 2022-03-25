@@ -5,7 +5,7 @@ if(isset($_POST['add_to_cart'])){
     $product_name = $_POST['product_name'];
     $product_price = $_POST['product_price'];
     $product_image = $_POST['product_image'];
-    $producty_quantity =1;
+    $producty_quantity = 1;
 
     $selectQuery = "SELECT * FROM  cart WHERE name = '$product_name'";
     $selectProCart = mysqli_query($db_connection, $selectQuery);
