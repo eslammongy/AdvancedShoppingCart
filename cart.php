@@ -73,7 +73,7 @@ if(isset($_GET['delete_all'])){
                     <?php 
          
          $select_cart = mysqli_query($db_connection, "SELECT * FROM cart");
-         $grand_total = 0;
+         $price_total = 0;
          if(mysqli_num_rows($select_cart) > 0){
             while($fetch_cart = mysqli_fetch_assoc($select_cart)){
          ?>
@@ -97,15 +97,15 @@ if(isset($_GET['delete_all'])){
                                 class="delete-btn"> <i class="fas fa-trash"></i> remove</a></td>
                     </tr>
                     <?php
-           $grand_total += $sub_total;  
+           $price_total += $sub_total;  
             };
          };
          ?>
                     <tr class="table-bottom">
                         <td><a href="products.php" class="option-btn" style="margin-top: 0;">continue shopping</a></td>
-                        <td colspan="3">grand total</td>
+                        <td colspan="3">price total</td>
 
-                        <td>$<?php echo $grand_total; ?> /-</td>
+                        <td>$<?php echo $price_total; ?> /-</td>
                         <td><a href="cart.php?delete_all"
                                 onclick="return confirm('Are you sure you want to remove all products from cart?');"
                                 class="delete-btn"> <i class="fas fa-trash"></i> delete all </a></td>
@@ -116,7 +116,7 @@ if(isset($_GET['delete_all'])){
             </table>
 
             <div class="checkout-btn">
-                <a href="checkout.php" class="btn <?= ($grand_total > 1)?'':'disabled'; ?>">Procced To Checkout</a>
+                <a href="checkout.php" class="btn <?= ($price_total > 1)?'':'disabled'; ?>">Procced To Checkout</a>
             </div>
 
         </section>
