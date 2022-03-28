@@ -1,5 +1,57 @@
-<?php   
-include ('config.php');
+<?php
+error_reporting(E_ERROR | E_PARSE);
+include 'config.php';
+
+if (isset($_POST['order_now_btn'])) {
+    $name = $_POST['name'];
+    $number = $_POST['number'];
+    $email = $_POST['email'];
+    $method = $_POST['method'];
+    $flat = $_POST['flat'];
+    $street = $_POST['street'];
+    $city = $_POST['city'];
+    $country = $_POST['country'];
+    $pin_code = $_POST['pin_code'];
+    
+    $cart_query = mysqli_query($db_connection, "SELECT * FROM cart");
+    $total_price = 0;
+    if (mysqli_num_rows($cart_query) > 0) {
+        while ($product_item = mysqli_fetch_assoc($cart_query)) {
+             $product_name[] = $product_item['name'] .' ('. $product_item['quantity'] .') ';
+            $product_price = number_format($product_item['price'] * $product_item['quantity']);
+            $total_price += $product_price;
+        };
+    };
+    $total_product = implode(', ', $product_name);
+    $queryOrder = "INSERT INTO orders(name, number, email, method, flat, street, city, country,
+       pinCode, totalProducts, totalPrice) VALUES('$name', '$number', '$email', '$method', '$flat', '$street', '$city', '$country',
+        '$pin_code', '$total_product', '$total_price')" or die("Query Failed");
+    $order_query = mysqli_query($db_connection, $queryOrder);
+
+    if ($cart_query && $order_query) {
+       echo "
+      <div class='order-message-container'>
+      <div class='message-container'>
+         <h3>thank you for shopping!</h3>
+         <div class='order-detail'>
+            <span>".$total_product."</span>
+            <span class='total'> total : $".$total_price."/-  </span>
+         </div>
+         <div class='customer-details'>
+            <p> your name : <span>".$name."</span> </p>
+            <p> your number : <span>".$number."</span> </p>
+            <p> your email : <span>".$email."</span> </p>
+            <p> your address : <span>".$flat.", ".$street.", ".$city.", ".$country." - ".$pin_code."</span> </p>
+            <p> your payment mode : <span>".$method."</span> </p>
+            <p>(*pay when product arrives*)</p>
+         </div>
+            <a href='products.php' class='btn'>continue shopping</a>
+         </div>
+      </div>
+      ";
+    
+  }
+};
 
 ?>
 
@@ -16,29 +68,29 @@ include ('config.php');
 </head>
 
 <body>
-    <?php include ('header.php'); ?>
+    <?php include 'header.php'; ?>
     <div class="container">
         <section class="checkout-form">
             <h1 class="heading">Complete Order </h1>
 
             <form action="" method="POST">
                 <div class="display-order">
-                    <?php  
-                $select_cart_q = mysqli_query($db_connection, "SELECT * FROM cart");
-                $price = 0;
-                $total_price = 0;
-                if(mysqli_num_rows($select_cart_q) > 0){
-                    while($rowCart = mysqli_fetch_assoc($select_cart_q)){
-                        $price = number_format($rowCart['price'] * $rowCart['quantity']);
-                        $total_price += $price;
-                  ?>
+                    <?php
+                    $select_cart_q = mysqli_query($db_connection, "SELECT * FROM cart");
+                    $price = 0;
+                    $total_price = 0;
+                    if (mysqli_num_rows($select_cart_q) > 0) {
+                        while ($rowCart = mysqli_fetch_assoc($select_cart_q)) {
+                            $price = number_format($rowCart['price'] * $rowCart['quantity']);
+                            $total_price += $price;
+                    ?>
                     <span><?php echo $rowCart['name']; ?>(<?php echo $rowCart['quantity']; ?>)</span>
                     <?php
-                   }
-                }else{
-                    echo "<div class='display-order'><span>your cart is empty!!</span></div>";
-                }
-                ?>
+                        }
+                    } else {
+                        echo "<div class='display-order'><span>your cart is empty!!</span></div>";
+                    }
+                    ?>
                     <span class="grand-total">Total Price : <?php echo $total_price; ?></span>
                 </div>
                 <div class="flex">
@@ -84,7 +136,7 @@ include ('config.php');
                     </div>
 
                 </div>
-                <input type="submit" value="Order Now" name="order_now" class="btn">
+                <input type="submit" value="Order Now" name="order_now_btn" class="btn">
             </form>
 
         </section>
