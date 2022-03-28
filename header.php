@@ -1,7 +1,7 @@
 <header class="header">
 
     <div class="flex">
-        <a href="#" class="logo"><img src="images/shopping-cart1.png" width="50px" height="50px" alt=""></a>
+        <a href="#" class="logo"><i class="fa-solid fa-bag-shopping"></i> Shopping</a>
         <nav class="navbar">
             <a href="admin.php">Add Product</a>
             <a href="products.php">View Products</a>

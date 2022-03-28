@@ -71,7 +71,7 @@ if (isset($_POST['order_now_btn'])) {
     <?php include 'header.php'; ?>
     <div class="container">
         <section class="checkout-form">
-            <h1 class="heading">Complete Order </h1>
+            <h1 class="heading">Complete Your Order </h1>
 
             <form action="" method="POST">
                 <div class="display-order">
